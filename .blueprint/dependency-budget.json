@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "1.0.0",
+  "policyId": "blueprint-os:universal-century-grade",
+  "policyVersion": "1.2.0",
+  "projectId": "project:ros-1-2",
+  "posture": "LOCAL_CORE",
+  "canonicalAuthority": {
+    "controlLoop": "on-device-ros2-runtime",
+    "sensorProcessing": "local-ros2-node",
+    "configuration": "local-files-and-launch-parameters",
+    "remoteStorage": "optional-archive-only"
+  },
+  "dependencies": [
+    {
+      "id": "ros2-runtime",
+      "class": "EXTERNAL_ESSENTIAL",
+      "costClass": "open-platform",
+      "purpose": "Robot middleware and local topic/service runtime",
+      "dataBoundary": "on-device-or-local-network",
+      "offlineBehavior": "Core package remains usable without Internet",
+      "exitPath": "Package contracts stay explicit through ROS messages/topics/parameters"
+    },
+    {
+      "id": "google-drive-or-equivalent",
+      "class": "OPTIONAL_SYNC",
+      "costClass": "free-or-optional-paid",
+      "purpose": "Optional archive for bags, logs, maps, exported configs or documentation",
+      "dataBoundary": "No live control authority, secrets or command loop",
+      "offlineBehavior": "No effect on live robot operation",
+      "exitPath": "Files remain ordinary ROS bags/maps/configs and can be copied to another storage provider"
+    }
+  ],
+  "forbidden": [
+    "drive-or-apps-script-in-control-loop",
+    "cloud-required-sensor-processing",
+    "cloud-required-actuation",
+    "remote-storage-as-live-command-authority",
+    "mandatory-paid-runtime-for-core-robot-operation"
+  ],
+  "releaseGate": "Constitution 1.2 dependency sovereignty check plus existing package build/test evidence; production/robot deployment remains separate."
+}
