@@ -12,3 +12,39 @@ permissions:
 jobs:
   constitution:
     uses: BlueDragon33/Software-Blueprint-Hub/.github/workflows/constitution-compliance.yml@main
+
+  dependency-sovereignty:
+    name: Constitution 1.2 dependency sovereignty
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate local robot authority
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          adoption = json.loads(Path(".blueprint/constitution-adoption.json").read_text())
+          budget = json.loads(Path(".blueprint/dependency-budget.json").read_text())
+
+          assert adoption["policyVersion"] == "1.2.0"
+          assert "operational-sovereignty-dependency-minimization" in adoption["inheritedPillars"]
+          assert budget["policyVersion"] == "1.2.0"
+          assert budget["projectId"] == adoption["projectId"]
+          assert budget["posture"] == "LOCAL_CORE"
+
+          forbidden = set(budget.get("forbidden", []))
+          required = {
+              "drive-or-apps-script-in-control-loop",
+              "cloud-required-sensor-processing",
+              "cloud-required-actuation",
+              "remote-storage-as-live-command-authority",
+          }
+          assert required <= forbidden
+
+          drive = next(d for d in budget["dependencies"] if d["id"] == "google-drive-or-equivalent")
+          assert drive["class"] == "OPTIONAL_SYNC"
+
+          print("Constitution 1.2 ROS local-control sovereignty: PASS")
+          PY
