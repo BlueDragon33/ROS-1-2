@@ -124,3 +124,16 @@ If you use any of this code please consider citing TODO:
 
 ```bibtex
 ```
+
+## Operational sovereignty
+
+This repository adopts **Universal Constitution 1.2.0** at Blueprint Level **B3**.
+
+The ROS node is a **LOCAL_CORE** capability:
+- point-cloud processing and map generation execute on-device or on the robot/local network;
+- Internet access is not required for the core algorithm;
+- Google Drive or equivalent may archive bags, logs, maps and exported configuration only;
+- Drive/Sheets/Apps Script must never enter a live control, sensing or actuation loop;
+- no mandatory paid runtime may become a prerequisite for core robot operation when local execution satisfies the requirement.
+
+Canonical dependency posture: `.blueprint/dependency-budget.json`.
