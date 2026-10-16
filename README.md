@@ -127,7 +127,7 @@ If you use any of this code please consider citing TODO:
 
 ## Operational sovereignty
 
-This repository adopts **Universal Constitution 1.2.0** at Blueprint Level **B3**.
+This repository adopts **Universal Constitution 1.3.0** at Blueprint Level **B3**.
 
 The ROS node is a **LOCAL_CORE** capability:
 - point-cloud processing and map generation execute on-device or on the robot/local network;
@@ -137,3 +137,8 @@ The ROS node is a **LOCAL_CORE** capability:
 - no mandatory paid runtime may become a prerequisite for core robot operation when local execution satisfies the requirement.
 
 Canonical dependency posture: `.blueprint/dependency-budget.json`.
+
+
+## Trạng thái kiểm định Blueprint OS 1.3
+
+Đã cập nhật **hợp đồng mã nguồn**; các điều kiện nghiệm thu offline và thử nghiệm thực tế (robot/thiết bị hoặc dữ liệu trẻ em, tùy dự án) chưa được xác minh. `docs/BLUEPRINT-13-SOURCE-AUDIT.json` ghi bằng chứng còn thiếu. Không tự cấp quyền Production, không tự publish khi merge. Các cổng riêng về bảo mật, quyền riêng tư và review độc lập vẫn bắt buộc.
