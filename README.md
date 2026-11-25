@@ -127,7 +127,7 @@ If you use any of this code please consider citing TODO:
 
 ## Operational sovereignty
 
-This repository adopts **Universal Constitution 1.2.0** at Blueprint Level **B3**.
+The source contract inherits **Universal Constitution 1.3.0** at Blueprint Level **B3**. Robot deployment requires its own ROS 2 build, offline simulation and applicable hardware evidence.
 
 The ROS node is a **LOCAL_CORE** capability:
 - point-cloud processing and map generation execute on-device or on the robot/local network;
