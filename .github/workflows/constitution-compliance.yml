@@ -14,7 +14,7 @@ jobs:
     uses: BlueDragon33/Software-Blueprint-Hub/.github/workflows/constitution-compliance.yml@main
 
   dependency-sovereignty:
-    name: Constitution 1.2 dependency sovereignty
+    name: ROS local-control dependency sovereignty
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,11 +28,18 @@ jobs:
           adoption = json.loads(Path(".blueprint/constitution-adoption.json").read_text())
           budget = json.loads(Path(".blueprint/dependency-budget.json").read_text())
 
-          assert adoption["policyVersion"] == "1.2.0"
           assert "operational-sovereignty-dependency-minimization" in adoption["inheritedPillars"]
-          assert budget["policyVersion"] == "1.2.0"
-          assert budget["projectId"] == adoption["projectId"]
+          assert budget["policyId"] == adoption["policyId"]
+          assert budget["policyVersion"] == adoption["policyVersion"]
+          assert budget["projectId"] == adoption["projectId"] == "project:ros-1-2"
+          assert adoption["blueprintLevel"] == "B3"
           assert budget["posture"] == "LOCAL_CORE"
+
+          authority = budget["canonicalAuthority"]
+          assert authority["controlLoop"] == "on-device-ros2-runtime"
+          assert authority["sensorProcessing"] == "local-ros2-node"
+          assert authority["configuration"] == "local-files-and-launch-parameters"
+          assert authority["remoteStorage"] == "optional-archive-only"
 
           forbidden = set(budget.get("forbidden", []))
           required = {
@@ -40,11 +47,12 @@ jobs:
               "cloud-required-sensor-processing",
               "cloud-required-actuation",
               "remote-storage-as-live-command-authority",
+              "mandatory-paid-runtime-for-core-robot-operation",
           }
           assert required <= forbidden
 
           drive = next(d for d in budget["dependencies"] if d["id"] == "google-drive-or-equivalent")
           assert drive["class"] == "OPTIONAL_SYNC"
 
-          print("Constitution 1.2 ROS local-control sovereignty: PASS")
+          print("ROS local-control sovereignty source checks passed")
           PY
